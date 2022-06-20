@@ -1,0 +1,15 @@
+C:\Programação\Maze_Generator\Maze_Generator\bin\Debug\net6.0\Maze_Generator.exe
+C:\Programação\Maze_Generator\Maze_Generator\bin\Debug\net6.0\Maze_Generator.deps.json
+C:\Programação\Maze_Generator\Maze_Generator\bin\Debug\net6.0\Maze_Generator.runtimeconfig.json
+C:\Programação\Maze_Generator\Maze_Generator\bin\Debug\net6.0\Maze_Generator.dll
+C:\Programação\Maze_Generator\Maze_Generator\bin\Debug\net6.0\Maze_Generator.pdb
+C:\Programação\Maze_Generator\Maze_Generator\obj\Debug\net6.0\Maze_Generator.csproj.AssemblyReference.cache
+C:\Programação\Maze_Generator\Maze_Generator\obj\Debug\net6.0\Maze_Generator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Programação\Maze_Generator\Maze_Generator\obj\Debug\net6.0\Maze_Generator.AssemblyInfoInputs.cache
+C:\Programação\Maze_Generator\Maze_Generator\obj\Debug\net6.0\Maze_Generator.AssemblyInfo.cs
+C:\Programação\Maze_Generator\Maze_Generator\obj\Debug\net6.0\Maze_Generator.csproj.CoreCompileInputs.cache
+C:\Programação\Maze_Generator\Maze_Generator\obj\Debug\net6.0\Maze_Generator.dll
+C:\Programação\Maze_Generator\Maze_Generator\obj\Debug\net6.0\refint\Maze_Generator.dll
+C:\Programação\Maze_Generator\Maze_Generator\obj\Debug\net6.0\Maze_Generator.pdb
+C:\Programação\Maze_Generator\Maze_Generator\obj\Debug\net6.0\Maze_Generator.genruntimeconfig.cache
+C:\Programação\Maze_Generator\Maze_Generator\obj\Debug\net6.0\ref\Maze_Generator.dll
