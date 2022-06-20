@@ -113,6 +113,7 @@ namespace Maze_Generator
             mazeCoordinates.Add(initialCoordinate);
             adjacentCoordinates = initialCoordinate.GetUnvisitedAdjacentCoordinates(width, height, visited); 
 
+
             while (visited.Count != maxNumberOfCoordinates)
             {
                 Coordinate current = adjacentCoordinates[random.Next(adjacentCoordinates.Count)];
