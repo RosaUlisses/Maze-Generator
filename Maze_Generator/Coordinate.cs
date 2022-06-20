@@ -16,35 +16,52 @@ namespace Maze_Generator
              this.x = x;
              this.y = y;
          }
-         private List<Coordinate> getAdjacentCells(int maxWidth, int maxHeight)
+         private List<Coordinate> GetAdjcentCoordinates(int maxWidth, int maxHeight)
          {
-            List<Coordinate> adjacentCells = new List<Coordinate>();
+            List<Coordinate> adjacentCoordinates = new List<Coordinate>();
 
             if (x + 1 >= 0 && x + 1 < maxWidth && y >= 0 && y < maxHeight)
             {
-                adjacentCells.Add(new Coordinate(x + 1, y));
+                adjacentCoordinates.Add(new Coordinate(x + 1, y));
             }
             if (x - 1 >= 0 && x - 1 < maxWidth && y >= 0 && y < maxHeight)
             {
-                adjacentCells.Add(new Coordinate(x - 1, y));
+                adjacentCoordinates.Add(new Coordinate(x - 1, y));
             }
             if (x >= 0 && x < maxWidth && y + 1 >= 0 && y + 1 < maxHeight)
             {
-                adjacentCells.Add(new Coordinate(x, y + 1));
+                adjacentCoordinates.Add(new Coordinate(x, y + 1));
             }
             if (x >= 0 && x < maxWidth && y - 1 >= 0 && y - 1 < maxHeight) 
             {
-                adjacentCells.Add(new Coordinate(x, y - 1));
+                adjacentCoordinates.Add(new Coordinate(x, y - 1));
             }
 
-            return adjacentCells;
+            return adjacentCoordinates;
          }
+
+         public List<Coordinate> GetUnvisitedAdjacentCoordinates(int maxWidth, int maxHeight, HashSet<Coordinate> visitedCoordinates)
+         {
+             List<Coordinate> adjacentCoordinates = GetAdjcentCoordinates(maxWidth, maxHeight);
+             List<Coordinate> unvisitedAdjacentCoordinates = new List<Coordinate>();
+
+             unvisitedAdjacentCoordinates = adjacentCoordinates
+                 .Where(c => !visitedCoordinates.Contains(c)).ToList();
+             return unvisitedAdjacentCoordinates;
+         }
+
+         public bool IsAdjacent(Coordinate coordinate)
+         {
+            if((x + 1 == coordinate.x || x - 1 == coordinate.x) && y == coordinate.y) return true;
+            if((y + 1 == coordinate.y || y - 1 == coordinate.y) && x == coordinate.x) return true;
+            return false;
+         }
+
          public override bool Equals(object? obj)
          {
              if (obj == null || this.GetType() != obj.GetType())
              {
-                 return false;
-             }
+                 return false; }
 
              else
              {

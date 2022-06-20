@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Programação\\Maze_Generator\\Maze_Generator\\Maze_Generator.csproj": {}
+    "C:\\Programação\\Maze-Generator\\Maze_Generator\\Maze_Generator.csproj": {}
   },
   "projects": {
-    "C:\\Programação\\Maze_Generator\\Maze_Generator\\Maze_Generator.csproj": {
+    "C:\\Programação\\Maze-Generator\\Maze_Generator\\Maze_Generator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Programação\\Maze_Generator\\Maze_Generator\\Maze_Generator.csproj",
+        "projectUniqueName": "C:\\Programação\\Maze-Generator\\Maze_Generator\\Maze_Generator.csproj",
         "projectName": "Maze_Generator",
-        "projectPath": "C:\\Programação\\Maze_Generator\\Maze_Generator\\Maze_Generator.csproj",
+        "projectPath": "C:\\Programação\\Maze-Generator\\Maze_Generator\\Maze_Generator.csproj",
         "packagesPath": "C:\\Users\\ulisses.rosa\\.nuget\\packages\\",
-        "outputPath": "C:\\Programação\\Maze_Generator\\Maze_Generator\\obj\\",
+        "outputPath": "C:\\Programação\\Maze-Generator\\Maze_Generator\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ulisses.rosa\\AppData\\Roaming\\NuGet\\NuGet.Config",

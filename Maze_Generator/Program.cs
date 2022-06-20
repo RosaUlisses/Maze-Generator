@@ -2,7 +2,6 @@
 using Maze_Generator;
 
 var mazeGenerator = new MazeGenerator(3, 3);
-var maze = mazeGenerator.primAlgorithm();
-var res = mazeGenerator.generateMaze(maze);
-mazeGenerator.printMaze(res);
+var maze = mazeGenerator.GenerateMaze(); 
+mazeGenerator.printMaze(maze);
 

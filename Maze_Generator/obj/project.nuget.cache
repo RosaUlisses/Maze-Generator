@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jp969TXTU6T+NJyNpCmRdbUx6XiBHSrMAjwfUAMiL1kUYkHcwRE9GHO+uNea5TP0ROa10pYqwIhZcLHszIHCgQ==",
+  "dgSpecHash": "YzxaFaz4frFY2JzF5M+fr3B2eD0PTHsUiQlb+MuEe9tDmb6+/b7poc9cQltONSNjfbAgjQ+hAkCpg0Fr+3z8vA==",
   "success": true,
-  "projectFilePath": "C:\\Programação\\Maze_Generator\\Maze_Generator\\Maze_Generator.csproj",
+  "projectFilePath": "C:\\Programação\\Maze-Generator\\Maze_Generator\\Maze_Generator.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
