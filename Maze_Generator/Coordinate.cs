@@ -16,6 +16,7 @@ namespace Maze_Generator
              this.x = x;
              this.y = y;
          }
+
          private List<Coordinate> GetAdjcentCoordinates(int maxWidth, int maxHeight)
          {
             List<Coordinate> adjacentCoordinates = new List<Coordinate>();
@@ -50,30 +51,24 @@ namespace Maze_Generator
              return unvisitedAdjacentCoordinates;
          }
 
-         public bool IsAdjacent(Coordinate coordinate)
-         {
-            if((x + 1 == coordinate.x || x - 1 == coordinate.x) && y == coordinate.y) return true;
-            if((y + 1 == coordinate.y || y - 1 == coordinate.y) && x == coordinate.x) return true;
-            return false;
-         }
-
          public override bool Equals(object? obj)
          {
              if (obj == null || this.GetType() != obj.GetType())
              {
-                 return false; }
-
+                 return false;
+             }
              else
              {
                  Coordinate coordinate = (Coordinate) obj;
-                 return (x == x && y == y) ? true : false;
+                 return x == coordinate.x && y == coordinate.y;
              }
          }
+
          public override int GetHashCode()
          {
             int X = x >= 0 ? 2 * x : -2 * x - 1;
             int Y = y >= 0 ? 2 * y : -2 * y - 1;
             return X >= Y ? X * X + X + Y : X + Y * Y;
-        }
+         }
     }
 }

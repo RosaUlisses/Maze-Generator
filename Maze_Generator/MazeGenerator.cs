@@ -17,7 +17,6 @@ namespace Maze_Generator
         private  Random random;
         private readonly int maxNumberOfCoordinates;
         
-
         private const int MAZE_CELL_SIZE = 2;
         private const int WALL_SIZE = 1;
 
@@ -29,39 +28,42 @@ namespace Maze_Generator
             this.height = height;
             maxNumberOfCoordinates = height * width; 
             random = new Random();
-        }   
+        }
 
         public int[,] GenerateMaze()
         {
-            int[,] maze = new int[(width * MAZE_CELL_SIZE) + (width - 1) * WALL_SIZE, (height * MAZE_CELL_SIZE) + (height - 1) * WALL_SIZE];
-            List<Coordinate> mazePath = BackTracking();
+            int[,] maze = InitMaze();
+            List<Tuple<Coordinate, Coordinate>> mazePath = BackTracking();
 
-            
-            for (int i = 0; i < mazePath.Count; i++)
+            foreach (var value in mazePath)
             {
-                if (i + 1 < mazePath.Count && mazePath[i].IsAdjacent(mazePath[i + 1]))
+               BreakWall(maze, value.Item1, value.Item2); 
+            }
+
+            printMaze(maze);
+            return maze;
+        }
+
+        private int[,] InitMaze()
+        {
+            int[,] maze = new int[(width * MAZE_CELL_SIZE) + WALL_SIZE * (width - 1) + MAZE_CELL_SIZE, (height * MAZE_CELL_SIZE) + (height - 1) * WALL_SIZE + MAZE_CELL_SIZE];
+
+            for (int i = WALL_SIZE * 2 + 1; i < maze.GetLength(0) - WALL_SIZE; i += 3)
+            {
+                for (int j = WALL_SIZE; j < maze.GetLength(1); j++)
                 {
-                   SetWall(maze, mazePath[i], mazePath[i + 1]); 
-                }
-                if (i - 1 >= 0 && mazePath[i].IsAdjacent(mazePath[i - 1]))
-                {
-                   SetWall(maze, mazePath[i], mazePath[i - 1]); 
+                    maze[i, j] = WALL;
+                    maze[j,i] = WALL;
                 }
             }
 
-            for (int i = 0; i < maze.GetLength(0); i ++)
+            for (int i = 0; i < maze.GetLength(0); i += maze.GetLength(0) - 1)
             {
                 for (int j = 0; j < maze.GetLength(1); j++)
                 {
-                    if (i == 0 || i == maze.GetLength(0) - 1)
-                    {
-                        maze[i, j] = WALL;
-                    }
-                    else if (j == 0 || j == maze.GetLength(1) - 1)
-                    {
-                        maze[i, j] = WALL;
-                    }
-                }
+                    maze[i, j] = WALL;
+                    maze[j, i] = WALL;
+                }               
             }
 
             return maze;
@@ -79,57 +81,100 @@ namespace Maze_Generator
                 }
                 Console.WriteLine(s);
             }           
+            Console.WriteLine("\n");
         }
 
-        private void SetWall(int[,] maze, Coordinate a, Coordinate b)
+        private void BreakWall(int[,] maze, Coordinate a, Coordinate b)
         {
-            if (a.x != b.x)
+            int aX = a.x * (MAZE_CELL_SIZE + 1) + 1;
+            int aY = a.y * (MAZE_CELL_SIZE + 1) + 1;
+            int bX = b.x * (MAZE_CELL_SIZE + 1) + 1;
+            int bY = b.y * (MAZE_CELL_SIZE + 1) + 1;
+
+            if (aY < bY)
             {
-                for (int j = a.y; j < a.y + MAZE_CELL_SIZE + WALL_SIZE; j++)
+                for (int i = aX ; i < aX + MAZE_CELL_SIZE; i++)
                 {
-                    if(a.x == b.x + WALL_SIZE) maze[a.x + WALL_SIZE, j] = WALL;
-                    else maze[b.x + WALL_SIZE, j] = WALL;
+                    maze[i, bY - 1] = PASSAGE;
+                }
+            }
+            else if (aY > bY)
+            {
+                for (int i = aX ; i < aX + MAZE_CELL_SIZE; i++)
+                {
+                    maze[i, aY - 1] = PASSAGE;
+                }
+            }
+            else if (aX < bX)
+            {
+                for (int i = aY; i < aY + MAZE_CELL_SIZE; i++)
+                {
+                   maze[bX - 1, i] = PASSAGE;
                 }
             }
             else
             {
-                for (int i = a.y; i < a.y + MAZE_CELL_SIZE + WALL_SIZE; i++)
+                for (int i = aY; i < aY + MAZE_CELL_SIZE; i++)
                 {
-                    if(a.y == b.y - WALL_SIZE) maze[i, a.y + WALL_SIZE] = WALL;
-                    else maze[i, b.y + WALL_SIZE] = WALL;
-                }
+                   maze[aX - 1, i] = PASSAGE;
+                }               
             }
         }
 
-        private List<Coordinate> BackTracking()
+        private List<Tuple<Coordinate, Coordinate>> BackTracking()
         {
-            List<Coordinate> mazeCoordinates = new List<Coordinate>();
+            List<Tuple<Coordinate, Coordinate>> mazeCoordinates = new List<Tuple<Coordinate, Coordinate>>();
             HashSet<Coordinate> visited = new HashSet<Coordinate>();
             Stack<Coordinate> stack = new Stack<Coordinate>();
             List<Coordinate> adjacentCoordinates;
 
-            Coordinate initialCoordinate = new Coordinate(0, 0);
+            Coordinate initialCoordinate = GenerateInitialCoordinate();
+            visited.Add(initialCoordinate);
             stack.Push(initialCoordinate);
-            mazeCoordinates.Add(initialCoordinate);
+
+            Coordinate last = initialCoordinate;
             adjacentCoordinates = initialCoordinate.GetUnvisitedAdjacentCoordinates(width, height, visited); 
 
-
-            while (visited.Count != maxNumberOfCoordinates)
+            while (visited.Count < width * height)
             {
                 Coordinate current = adjacentCoordinates[random.Next(adjacentCoordinates.Count)];
                 visited.Add(current);
-                mazeCoordinates.Add(current);
 
                 adjacentCoordinates = current.GetUnvisitedAdjacentCoordinates(width, height, visited);
-                while (adjacentCoordinates.Count == 0)
+
+                bool backtrack = false;
+                mazeCoordinates.Add(new Tuple<Coordinate, Coordinate>(last, current));                
+                last = current;
+
+                while (adjacentCoordinates.Count == 0 && stack.Count > 0)
                 {
                     Coordinate lastVisitedCoordinate = stack.Pop();
+                    last = lastVisitedCoordinate;
                     adjacentCoordinates = lastVisitedCoordinate.GetUnvisitedAdjacentCoordinates(width, height, visited);
+                    backtrack = true;
                 }
-                stack.Push(current);
-            }
 
+                if (backtrack) continue;
+
+                stack.Push(current);
+
+            }
             return mazeCoordinates;
+        }
+
+        private Coordinate GenerateInitialCoordinate()
+        {
+            List<Coordinate> possibleInitialCoordinates = new List<Coordinate>();
+
+            for (int i = 0; i < width; i += width - 1)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                   possibleInitialCoordinates.Add(new Coordinate(i,j)); 
+                    possibleInitialCoordinates.Add(new Coordinate(j,i));
+                } 
+            }
+            return possibleInitialCoordinates[random.Next(possibleInitialCoordinates.Count)];
         }
     }
 }
