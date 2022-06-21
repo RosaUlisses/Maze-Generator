@@ -22,6 +22,7 @@ namespace Maze_Generator
 
         private const int WALL = 1;
         private const int PASSAGE = 0;
+
         public MazeGenerator(int width, int height)
         {
             this.width = width;
@@ -35,12 +36,10 @@ namespace Maze_Generator
             int[,] maze = InitMaze();
             List<Tuple<Coordinate, Coordinate>> mazePath = BackTracking();
 
-            foreach (var value in mazePath)
+            foreach (Tuple<Coordinate, Coordinate> value in mazePath)
             {
                BreakWall(maze, value.Item1, value.Item2); 
             }
-
-            printMaze(maze);
             return maze;
         }
 
@@ -48,6 +47,7 @@ namespace Maze_Generator
         {
             int[,] maze = new int[(width * MAZE_CELL_SIZE) + WALL_SIZE * (width - 1) + MAZE_CELL_SIZE, (height * MAZE_CELL_SIZE) + (height - 1) * WALL_SIZE + MAZE_CELL_SIZE];
 
+            // Setting all the internal walls between the cells of the maze 
             for (int i = WALL_SIZE * 2 + 1; i < maze.GetLength(0) - WALL_SIZE; i += 3)
             {
                 for (int j = WALL_SIZE; j < maze.GetLength(1); j++)
@@ -57,6 +57,7 @@ namespace Maze_Generator
                 }
             }
 
+            // Setting all the external walls of the maze 
             for (int i = 0; i < maze.GetLength(0); i += maze.GetLength(0) - 1)
             {
                 for (int j = 0; j < maze.GetLength(1); j++)
@@ -65,7 +66,6 @@ namespace Maze_Generator
                     maze[j, i] = WALL;
                 }               
             }
-
             return maze;
         }
 
@@ -123,7 +123,7 @@ namespace Maze_Generator
 
         private List<Tuple<Coordinate, Coordinate>> BackTracking()
         {
-            List<Tuple<Coordinate, Coordinate>> mazeCoordinates = new List<Tuple<Coordinate, Coordinate>>();
+            List<Tuple<Coordinate, Coordinate>> mazePath = new List<Tuple<Coordinate, Coordinate>>();
             HashSet<Coordinate> visited = new HashSet<Coordinate>();
             Stack<Coordinate> stack = new Stack<Coordinate>();
             List<Coordinate> adjacentCoordinates;
@@ -139,13 +139,14 @@ namespace Maze_Generator
             {
                 Coordinate current = adjacentCoordinates[random.Next(adjacentCoordinates.Count)];
                 visited.Add(current);
-
                 adjacentCoordinates = current.GetUnvisitedAdjacentCoordinates(width, height, visited);
 
                 bool backtrack = false;
-                mazeCoordinates.Add(new Tuple<Coordinate, Coordinate>(last, current));                
+                // Store a wall to break, in the path of the maze
+                mazePath.Add(new Tuple<Coordinate, Coordinate>(last, current));                
                 last = current;
 
+                // If a node does not have unvisited adjacent nodes, backtrack
                 while (adjacentCoordinates.Count == 0 && stack.Count > 0)
                 {
                     Coordinate lastVisitedCoordinate = stack.Pop();
@@ -153,17 +154,15 @@ namespace Maze_Generator
                     adjacentCoordinates = lastVisitedCoordinate.GetUnvisitedAdjacentCoordinates(width, height, visited);
                     backtrack = true;
                 }
-
                 if (backtrack) continue;
-
                 stack.Push(current);
-
             }
-            return mazeCoordinates;
+            return mazePath;
         }
 
         private Coordinate GenerateInitialCoordinate()
         {
+            // The initial coordinates are in the "border" of the maze
             List<Coordinate> possibleInitialCoordinates = new List<Coordinate>();
 
             for (int i = 0; i < width; i += width - 1)

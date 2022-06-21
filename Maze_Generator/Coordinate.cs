@@ -8,8 +8,8 @@ namespace Maze_Generator
 {
     public class Coordinate
     {
-         public int x { get; private set; }
-         public int y { get; private set; }
+         public int x { get; }
+         public int y { get; }
 
          public Coordinate(int x, int y)
          {
