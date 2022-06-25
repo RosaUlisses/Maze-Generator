@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\ulisses.rosa\\.nuget\\packages\\": {}
+    "C:\\Users\\jeanb\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Programação\\Maze-Generator\\Maze_Generator\\Maze_Generator.csproj",
+      "projectUniqueName": "D:\\Programação\\Maze-Generator\\Maze_Generator\\Maze_Generator.csproj",
       "projectName": "Maze_Generator",
-      "projectPath": "C:\\Programação\\Maze-Generator\\Maze_Generator\\Maze_Generator.csproj",
-      "packagesPath": "C:\\Users\\ulisses.rosa\\.nuget\\packages\\",
-      "outputPath": "C:\\Programação\\Maze-Generator\\Maze_Generator\\obj\\",
+      "projectPath": "D:\\Programação\\Maze-Generator\\Maze_Generator\\Maze_Generator.csproj",
+      "packagesPath": "C:\\Users\\jeanb\\.nuget\\packages\\",
+      "outputPath": "D:\\Programação\\Maze-Generator\\Maze_Generator\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ulisses.rosa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\jeanb\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -60,7 +60,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }
