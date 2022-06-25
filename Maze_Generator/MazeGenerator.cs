@@ -14,9 +14,9 @@ namespace Maze_Generator
     {
         private int width;
         private int height;
-        private  Random random;
+        private Random random;
         private readonly int maxNumberOfCoordinates;
-        
+
         private const int MAZE_CELL_SIZE = 2;
         private const int WALL_SIZE = 1;
 
@@ -25,9 +25,13 @@ namespace Maze_Generator
 
         public MazeGenerator(int width, int height)
         {
+            if (width <= 0 || height <= 0)
+            {
+                throw new ArgumentException("Width and/or height should be higher than 0");
+            }
             this.width = width;
             this.height = height;
-            maxNumberOfCoordinates = height * width; 
+            maxNumberOfCoordinates = height * width;
             random = new Random();
         }
 
@@ -38,7 +42,7 @@ namespace Maze_Generator
 
             foreach (Tuple<Coordinate, Coordinate> value in mazePath)
             {
-               BreakWall(maze, value.Item1, value.Item2); 
+                BreakWall(maze, value.Item1, value.Item2);
             }
             return maze;
         }
@@ -53,7 +57,7 @@ namespace Maze_Generator
                 for (int j = WALL_SIZE; j < maze.GetLength(1); j++)
                 {
                     maze[i, j] = WALL;
-                    maze[j,i] = WALL;
+                    maze[j, i] = WALL;
                 }
             }
 
@@ -64,11 +68,11 @@ namespace Maze_Generator
                 {
                     maze[i, j] = WALL;
                     maze[j, i] = WALL;
-                }               
+                }
             }
             return maze;
         }
-
+        
         public void printMaze(int[,] maze)
         {
             for (int i = 0; i < maze.GetLength(0); i++)
@@ -80,7 +84,7 @@ namespace Maze_Generator
                     else s += "  ";
                 }
                 Console.WriteLine(s);
-            }           
+            }
             Console.WriteLine("\n");
         }
 
@@ -93,14 +97,14 @@ namespace Maze_Generator
 
             if (aY < bY)
             {
-                for (int i = aX ; i < aX + MAZE_CELL_SIZE; i++)
+                for (int i = aX; i < aX + MAZE_CELL_SIZE; i++)
                 {
                     maze[i, bY - 1] = PASSAGE;
                 }
             }
             else if (aY > bY)
             {
-                for (int i = aX ; i < aX + MAZE_CELL_SIZE; i++)
+                for (int i = aX; i < aX + MAZE_CELL_SIZE; i++)
                 {
                     maze[i, aY - 1] = PASSAGE;
                 }
@@ -109,15 +113,15 @@ namespace Maze_Generator
             {
                 for (int i = aY; i < aY + MAZE_CELL_SIZE; i++)
                 {
-                   maze[bX - 1, i] = PASSAGE;
+                    maze[bX - 1, i] = PASSAGE;
                 }
             }
             else
             {
                 for (int i = aY; i < aY + MAZE_CELL_SIZE; i++)
                 {
-                   maze[aX - 1, i] = PASSAGE;
-                }               
+                    maze[aX - 1, i] = PASSAGE;
+                }
             }
         }
 
@@ -133,7 +137,7 @@ namespace Maze_Generator
             stack.Push(initialCoordinate);
 
             Coordinate last = initialCoordinate;
-            adjacentCoordinates = initialCoordinate.GetUnvisitedAdjacentCoordinates(width, height, visited); 
+            adjacentCoordinates = initialCoordinate.GetUnvisitedAdjacentCoordinates(width, height, visited);
 
             while (visited.Count < width * height)
             {
@@ -143,7 +147,7 @@ namespace Maze_Generator
 
                 bool backtrack = false;
                 // Store a wall to break, in the path of the maze
-                mazePath.Add(new Tuple<Coordinate, Coordinate>(last, current));                
+                mazePath.Add(new Tuple<Coordinate, Coordinate>(last, current));
                 last = current;
 
                 // If a node does not have unvisited adjacent nodes, backtrack
@@ -169,9 +173,9 @@ namespace Maze_Generator
             {
                 for (int j = 0; j < height; j++)
                 {
-                   possibleInitialCoordinates.Add(new Coordinate(i,j)); 
-                    possibleInitialCoordinates.Add(new Coordinate(j,i));
-                } 
+                    possibleInitialCoordinates.Add(new Coordinate(i, j));
+                    possibleInitialCoordinates.Add(new Coordinate(j, i));
+                }
             }
             return possibleInitialCoordinates[random.Next(possibleInitialCoordinates.Count)];
         }
